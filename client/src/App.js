@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import PrinterAddress from "./printerAddress";
-import PricePerPrint from "./PricePerPrint";
+
+import SetConstants from "./setConstants";
+import Welcome from "./welcome";
+import PriceList from "./priceList";
+import WelcomeScreen from "./welcomeScreen";
 
 class App extends Component {
-  state = { loading: true, drizzleState: null };
+  state = { loading: true, drizzleState: null, welcomeState: true};
   componentDidMount() {
+
     const { drizzle } = this.props;
     // subscribe to changes in the store
     this.unsubscribe = drizzle.store.subscribe(() => {
@@ -16,24 +19,43 @@ class App extends Component {
       if (drizzleState.drizzleStatus.initialized) {
         this.setState({ loading: false, drizzleState });
       }
-    });
-  }compomentWillUnmount() {
-    this.unsubscribe();
-  }
-  render() {
-  if (this.state.loading) return "Loading Drizzle...";
-  return (
-    <div className="App">
-      <PrinterAddress
-        drizzle={this.props.drizzle}
-        drizzleState={this.state.drizzleState}
-      />
-      <PricePerPrint
-        drizzle={this.props.drizzle}
-        drizzleState={this.state.drizzleState}
-      />
 
-    </div>
-  );
+    });
+  }
+
+  compomentWillUnmount() {
+    this.unsubscribe();
+    //
+  }
+
+
+
+
+render(){
+  if (this.state.loading) return "Loading Drizzle...";
+
+console.log(this.state.welcomeState);
+
+  return(
+    <div className="App">
+      <WelcomeScreen
+      drizzle={this.props.drizzle}
+      drizzleState={this.state.drizzleState}
+      
+      />
+      </div>
+  )
+  /*
+  return(
+    <div className="App">
+      <SetConstants
+      drizzle={this.props.drizzle}
+      drizzleState={this.state.drizzleState}
+      welcomeScreen={this.state.welcomeScreen}
+      />
+      </div>
+  )
+  */
 }
-}export default App;
+}
+export default App;
