@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import SetConstants from "./setConstants";
-import Welcome from "./welcome";
+
 import PriceList from "./priceList";
 import WelcomeScreen from "./welcomeScreen";
+import GetContact from "./getContact";
 
 class App extends Component {
-  state = { loading: true, drizzleState: null, welcomeState: true};
+  constructor(props){
+  super(props);
+  this.state = { loading: true, drizzleState: null, welcomeState: true, contactMethod: ''};
+  this.handleWelcomeChange = this.handleWelcomeChange.bind(this);
+  this.addContactMethod = this.addContactMethod.bind(this);
+}
   componentDidMount() {
 
     const { drizzle } = this.props;
@@ -28,6 +33,14 @@ class App extends Component {
     //
   }
 
+handleWelcomeChange(){
+
+  this.setState({welcomeState:!this.state.welcomeState});
+}
+
+addContactMethod(contactMethod){
+  this.setState({contactMethod:contactMethod});
+}
 
 
 
@@ -36,26 +49,36 @@ render(){
 
 console.log(this.state.welcomeState);
 
+  if (this.state.welcomeState){
   return(
     <div className="App">
       <WelcomeScreen
       drizzle={this.props.drizzle}
       drizzleState={this.state.drizzleState}
-      
+      handleWelcomeChange={this.handleWelcomeChange}
+
       />
       </div>
   )
-  /*
-  return(
-    <div className="App">
-      <SetConstants
-      drizzle={this.props.drizzle}
-      drizzleState={this.state.drizzleState}
-      welcomeScreen={this.state.welcomeScreen}
-      />
-      </div>
-  )
-  */
+} else {
+  return (
+  <div>
+  <GetContact
+  drizzle={this.props.drizzle}
+  drizzleState={this.state.drizzleState}
+  handleWelcomeChange={this.handleWelcomeChange}
+  addContactMethod = {this.addContactMethod}
+  contactMethod = {this.state.contactMethod}
+  />
+
+  <PriceList
+  drizzle={this.props.drizzle}
+  drizzleState={this.state.drizzleState}
+  />
+  </div>
+)
+}
+
 }
 }
 export default App;

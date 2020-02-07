@@ -14,7 +14,7 @@ class WelcomeScreen extends React.Component {
 
   handleClick(){
 
-  this.props.changeWelcomeState();
+  this.props.handleWelcomeChange();
 
   }
 
@@ -35,7 +35,7 @@ render(){
     drizzle={this.props.drizzle}
     drizzleState={this.props.drizzleState}
     />
-    <button onClick = {this.handleClick}>Click Here To Proceed</button>
+    <button onClick = {this.handleClick}>Click Here To Get Started</button>
     </div>
   )
 }
