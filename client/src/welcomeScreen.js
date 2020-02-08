@@ -14,7 +14,7 @@ class WelcomeScreen extends React.Component {
 
   handleClick(){
 
-  this.props.handleWelcomeChange();
+  this.props.handleWelcomeChange(1);
 
   }
 
