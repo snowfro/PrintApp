@@ -36,6 +36,9 @@ class App extends Component {
 handleWelcomeChange(value){
   const newWelcomeState = this.state.welcomeState+value;
   this.setState({welcomeState:newWelcomeState});
+  if (this.state.welcomeState===2){
+    this.setState({contactMethod: '', punkId: null});
+  }
 }
 
 addContactMethod(contactMethod){
@@ -49,9 +52,9 @@ setPunkId(punkId){
 
 
 render(){
-  if (this.state.loading) return "Loading Drizzle...";
+  if (this.state.loading) return "Loading Web3... Please make sure you are connected to Ethereum.";
 
-console.log(this.state.welcomeState);
+//console.log(this.state.welcomeState);
 
   if (this.state.welcomeState===0){
   return(
@@ -85,6 +88,7 @@ console.log(this.state.welcomeState);
     contactMethod={this.state.contactMethod}
     drizzle={this.props.drizzle}
     drizzleState={this.state.drizzleState}
+    handleWelcomeChange={this.handleWelcomeChange}
     />
     </div>
   )

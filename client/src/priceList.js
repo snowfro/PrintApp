@@ -13,12 +13,15 @@ class PriceList extends React.Component {
     const pricePerPrintIntlShipInWei = PunkPrintRegistry.pricePerPrintIntlShipInWei['0x0'];
     const pricePerNFCInWei = PunkPrintRegistry.pricePerNFCInWei['0x0'];
     const pricePerNFCIntlShipInWei = PunkPrintRegistry.pricePerNFCIntlShipInWei['0x0'];
-    const pricePerMiscInWei = PunkPrintRegistry.pricePerMiscInWei['0x0'];
-    const pricePerMiscIntlShipInWei = PunkPrintRegistry.pricePerMiscIntlShipInWei['0x0'];
+    //const pricePerMiscInWei = PunkPrintRegistry.pricePerMiscInWei['0x0'];
+    //const pricePerMiscIntlShipInWei = PunkPrintRegistry.pricePerMiscIntlShipInWei['0x0'];
 
 
     return (
       <div>
+      <br />
+      <p>--------------------------------------------</p>
+      <br />
       <h4>Domestic (US) Pricing: </h4>
       <br />
       <ul>

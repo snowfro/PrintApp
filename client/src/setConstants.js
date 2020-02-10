@@ -15,7 +15,7 @@ class SetConstants extends React.Component {
 
 
   Promise.all([ pricePerPrintInWei, pricePerPrintIntlShipInWei, pricePerNFCInWei, pricePerNFCIntlShipInWei, pricePerMiscInWei, pricePerMiscIntlShipInWei ]).then(() => {
-      console.log('promises made');
+      //console.log('promises made');
       this.setState({
           pricesLoading : false
       });

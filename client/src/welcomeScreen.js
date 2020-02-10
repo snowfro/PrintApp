@@ -31,11 +31,12 @@ render(){
     drizzleState={this.props.drizzleState}
 
     />
+    <button onClick = {this.handleClick}>Click Here To Get Started</button>
     <PriceList
     drizzle={this.props.drizzle}
     drizzleState={this.props.drizzleState}
     />
-    <button onClick = {this.handleClick}>Click Here To Get Started</button>
+
     </div>
   )
 }

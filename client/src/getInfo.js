@@ -42,7 +42,7 @@ render(){
 
   return (
     <div>
-    <h1>Punk Registry Store {this.props.contactMethod + " " + this.props.punkId}</h1>
+    <h1>Punk Registry Store</h1>
     <br />
     <h4>Step 1: Provide Contact Method</h4>
     <br />
@@ -80,12 +80,12 @@ render(){
         </div>
       }
 
-
-    <button onClick = {this.handleBackClick} disabled={this.state.stage>1?false:true} className={this.state.stage>1?null:"hidden"}>Previous Step</button><button onClick = {this.handleNextClick}>{this.state.stage>2?"CONFIRM":"Next Step"}</button>
+    <br />
+    <button onClick = {this.handleBackClick} disabled={this.state.stage>1?false:true} className={this.state.stage>1?null:"hidden"}>Previous Step</button><button onClick = {this.handleNextClick} disabled={!this.props.punkId&&this.state.stage>1?true:false} >{this.state.stage>2?"CONFIRM":"Next Step"}</button>
     <br />
     <br />
     <br />
-    <button onClick = {this.handleClick}>Go Back</button>
+    <button onClick = {this.handleClick}>Back To Start</button>
     </div>
 )
   }

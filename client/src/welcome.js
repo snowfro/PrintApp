@@ -29,7 +29,7 @@ class Welcome extends React.Component {
       </p>
       <br />
       <p> This contact method will be deleted after you receive your print or NFC.</p>
-
+      <br />
       </div>
     )
   }
