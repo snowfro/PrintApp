@@ -30,6 +30,8 @@ class Welcome extends React.Component {
       <br />
       <p> This contact method will be deleted after you receive your print or NFC.</p>
       <br />
+      <p> This print registry is operated by Art Blocks, LLC and is not affiliated with or endorsed by the creators of the CryptoPunks project.</p>
+      <br />
       </div>
     )
   }

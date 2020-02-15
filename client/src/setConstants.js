@@ -3,25 +3,43 @@ import React from "react";
 class SetConstants extends React.Component {
 
   componentDidMount() {
-    const { drizzle } = this.props;
-    const contract = drizzle.contracts.PunkPrintRegistry;
+    const { drizzle, drizzleState } = this.props;
+    const contract1 = drizzle.contracts.PunkPrintRegistry;
+    const contract2 = drizzle.contracts.PunkPrintRegistryMinter;
 
-    const pricePerPrintInWei = contract.methods["pricePerPrintInWei"].cacheCall();
-    const pricePerPrintIntlShipInWei = contract.methods["pricePerPrintIntlShipInWei"].cacheCall();
-    const pricePerNFCInWei = contract.methods["pricePerNFCInWei"].cacheCall();
-    const pricePerNFCIntlShipInWei = contract.methods["pricePerNFCIntlShipInWei"].cacheCall();
-    const pricePerMiscInWei = contract.methods["pricePerMiscInWei"].cacheCall();
-    const pricePerMiscIntlShipInWei = contract.methods["pricePerMiscIntlShipInWei"].cacheCall();
+    const pricePerPrintInWei = contract1.methods["pricePerPrintInWei"].cacheCall();
+    const pricePerPrintIntlShipInWei = contract1.methods["pricePerPrintIntlShipInWei"].cacheCall();
+    const pricePerNFCInWei = contract1.methods["pricePerNFCInWei"].cacheCall();
+    const pricePerNFCIntlShipInWei = contract1.methods["pricePerNFCIntlShipInWei"].cacheCall();
+    const pricePerMiscInWei = contract1.methods["pricePerMiscInWei"].cacheCall();
+    const pricePerMiscIntlShipInWei = contract1.methods["pricePerMiscIntlShipInWei"].cacheCall();
+
+    const creditsToUseKey = contract2.methods['addressToCreditsToSpend'].cacheCall(drizzleState.accounts[0]);
+    const creditsToGiveKey = contract2.methods['managerAddressToCreditsToGive'].cacheCall(drizzleState.accounts[0]);
+
+    const owner1Key = contract2.methods['owner1'].cacheCall();
+    const owner2Key = contract2.methods['owner2'].cacheCall();
+    //console.log(this.creditsToUseKey, this.creditsToGiveKey);
 
 
-  Promise.all([ pricePerPrintInWei, pricePerPrintIntlShipInWei, pricePerNFCInWei, pricePerNFCIntlShipInWei, pricePerMiscInWei, pricePerMiscIntlShipInWei ]).then(() => {
+    Promise.all([ pricePerPrintInWei, pricePerPrintIntlShipInWei, pricePerNFCInWei, pricePerNFCIntlShipInWei, pricePerMiscInWei, pricePerMiscIntlShipInWei,creditsToUseKey, creditsToGiveKey, owner1Key, owner2Key ]).then(() => {
       //console.log('promises made');
       this.setState({
           pricesLoading : false
       });
+      this.props.setCreditsToUseKey(creditsToUseKey);
+
+      this.props.setCreditsToGiveKey(creditsToGiveKey);
+      this.props.setOwner1Key(owner1Key);
+      this.props.setOwner2Key(owner2Key);
     });
+
 }
   render(){
+
+    const {drizzleState} = this.props;
+    console.log(drizzleState.accounts[0]);
+    
 return null;
 
 }

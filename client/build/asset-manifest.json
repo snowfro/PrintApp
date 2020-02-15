@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/punkprintapp/static/css/main.e529094d.chunk.css",
-    "main.js": "/punkprintapp/static/js/main.0d596c6c.chunk.js",
-    "main.js.map": "/punkprintapp/static/js/main.0d596c6c.chunk.js.map",
+    "main.js": "/punkprintapp/static/js/main.ac1e32ce.chunk.js",
+    "main.js.map": "/punkprintapp/static/js/main.ac1e32ce.chunk.js.map",
     "runtime-main.js": "/punkprintapp/static/js/runtime-main.f9913995.js",
     "runtime-main.js.map": "/punkprintapp/static/js/runtime-main.f9913995.js.map",
-    "static/js/2.8ac90c5b.chunk.js": "/punkprintapp/static/js/2.8ac90c5b.chunk.js",
-    "static/js/2.8ac90c5b.chunk.js.map": "/punkprintapp/static/js/2.8ac90c5b.chunk.js.map",
+    "static/js/2.bd0d5d63.chunk.js": "/punkprintapp/static/js/2.bd0d5d63.chunk.js",
+    "static/js/2.bd0d5d63.chunk.js.map": "/punkprintapp/static/js/2.bd0d5d63.chunk.js.map",
     "index.html": "/punkprintapp/index.html",
-    "precache-manifest.b32153cc1d812eba6625d37283c7f70c.js": "/punkprintapp/precache-manifest.b32153cc1d812eba6625d37283c7f70c.js",
+    "precache-manifest.d35b4a722a25c8f4982381f7645bdaaa.js": "/punkprintapp/precache-manifest.d35b4a722a25c8f4982381f7645bdaaa.js",
     "service-worker.js": "/punkprintapp/service-worker.js",
     "static/css/main.e529094d.chunk.css.map": "/punkprintapp/static/css/main.e529094d.chunk.css.map",
-    "static/js/2.8ac90c5b.chunk.js.LICENSE": "/punkprintapp/static/js/2.8ac90c5b.chunk.js.LICENSE",
+    "static/js/2.bd0d5d63.chunk.js.LICENSE": "/punkprintapp/static/js/2.bd0d5d63.chunk.js.LICENSE",
     "static/media/punks.png": "/punkprintapp/static/media/punks.c91df1f9.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f9913995.js",
-    "static/js/2.8ac90c5b.chunk.js",
+    "static/js/2.bd0d5d63.chunk.js",
     "static/css/main.e529094d.chunk.css",
-    "static/js/main.0d596c6c.chunk.js"
+    "static/js/main.ac1e32ce.chunk.js"
   ]
 }

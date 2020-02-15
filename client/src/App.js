@@ -4,14 +4,22 @@ import './App.css';
 import WelcomeScreen from "./welcomeScreen";
 import GetInfo from "./getInfo";
 import Purchase from "./purchase";
+import SetConstants from "./setConstants";
 
 class App extends Component {
   constructor(props){
   super(props);
-  this.state = { loading: true, drizzleState: null, welcomeState: 0, contactMethod: '', punkId:null};
+  this.state = { loading: true, drizzleState: null, welcomeState: 0, contactMethod: '', punkId:null, creditsToUseKey:null, creditsToGiveKey:null, creditToAddress:null, owner1Key:null, owner2Key:null, creditManagerCreditsToGive:null, creditManagerAddressToCredit:null};
   this.handleWelcomeChange = this.handleWelcomeChange.bind(this);
   this.addContactMethod = this.addContactMethod.bind(this);
   this.setPunkId = this.setPunkId.bind(this);
+  this.setCreditsToUseKey = this.setCreditsToUseKey.bind(this);
+  this.setCreditsToGiveKey = this.setCreditsToGiveKey.bind(this);
+  this.setCreditToAddress = this.setCreditToAddress.bind(this);
+  this.setOwner1Key = this.setOwner1Key.bind(this);
+  this.setOwner2Key = this.setOwner2Key.bind(this);
+  this.setCreditManagerCreditsToGive = this.setCreditManagerCreditsToGive.bind(this);
+  this.setCreditManagerAddressToCredit = this.setCreditManagerAddressToCredit.bind(this);
 }
   componentDidMount() {
 
@@ -32,6 +40,34 @@ class App extends Component {
     this.unsubscribe();
     //
   }
+
+  setCreditManagerCreditsToGive(value){
+    this.setState({creditManagerCreditsToGive:value});
+  }
+
+  setCreditManagerAddressToCredit(value){
+    this.setState({creditManagerAddressToCredit:value});
+  }
+  setCreditToAddress(value){
+    this.setState({creditToAddress:value});
+  }
+
+  setCreditsToUseKey(value){
+    this.setState({creditsToUseKey:value});
+  }
+  setOwner1Key(value){
+    this.setState({owner1Key:value});
+  }
+
+  setOwner2Key(value){
+    this.setState({owner2Key:value});
+  }
+
+  setCreditsToGiveKey(value){
+    this.setState({creditsToGiveKey:value});
+  }
+
+
 
 handleWelcomeChange(value){
   const newWelcomeState = this.state.welcomeState+value;
@@ -63,7 +99,28 @@ render(){
       drizzle={this.props.drizzle}
       drizzleState={this.state.drizzleState}
       handleWelcomeChange={this.handleWelcomeChange}
+      creditsToUseKey = {this.state.creditsToUseKey}
+      creditsToGiveKey = {this.state.creditsToGiveKey}
+      setCreditToAddress = {this.setCreditToAddress}
+      creditToAddress = {this.state.creditToAddress}
+      setOwner1Key = {this.setOwner1Key}
+      setOwner2Key = {this.setOwner2Key}
+      owner1Key = {this.state.owner1Key}
+      owner2Key = {this.state.owner2Key}
+      setCreditManagerCreditsToGive = {this.setCreditManagerCreditsToGive}
+      setCreditManagerAddressToCredit = {this.setCreditManagerAddressToCredit}
+      creditManagerCreditsToGive = {this.state.creditManagerCreditsToGive}
+      creditManagerAddressToCredit = {this.state.creditManagerAddressToCredit}
       />
+      <SetConstants
+      drizzle={this.props.drizzle}
+      drizzleState={this.state.drizzleState}
+      setCreditsToUseKey = {this.setCreditsToUseKey}
+      setCreditsToGiveKey = {this.setCreditsToGiveKey}
+      setOwner1Key = {this.setOwner1Key}
+      setOwner2Key = {this.setOwner2Key}
+      />
+
       </div>
     )
   } else if (this.state.welcomeState===1) {
@@ -77,7 +134,12 @@ render(){
       contactMethod = {this.state.contactMethod}
       setPunkId={this.setPunkId}
       punkId = {this.state.punkId}
+      creditsToUseKey = {this.state.creditsToUseKey}
+      creditsToGiveKey = {this.state.creditsToGiveKey}
+      owner1Key = {this.state.owner1Key}
+      owner2Key = {this.state.owner2Key}
     />
+
   </div>
   )
 } else if (this.state.welcomeState===2) {
@@ -89,6 +151,10 @@ render(){
     drizzle={this.props.drizzle}
     drizzleState={this.state.drizzleState}
     handleWelcomeChange={this.handleWelcomeChange}
+    creditsToUseKey = {this.state.creditsToUseKey}
+    creditsToGiveKey = {this.state.creditsToGiveKey}
+    owner1Key = {this.state.owner1Key}
+    owner2Key = {this.state.owner2Key}
     />
     </div>
   )

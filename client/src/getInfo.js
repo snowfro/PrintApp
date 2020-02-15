@@ -40,6 +40,10 @@ class GetInfo extends React.Component {
 
 render(){
 
+  const {drizzleState} = this.props;
+  
+  console.log(drizzleState);
+
   return (
     <div>
     <h1>Punk Registry Store</h1>
@@ -64,7 +68,7 @@ render(){
         <br />
         <h4>Step 2: Choose Your Punk</h4>
         <br />
-        <p>Great! Now we need to choose a punk. Please type in your PunkId (between 0 and 999) in the box below and click "next step".</p>
+        <p>Great! Now we need to choose a punk. Please type in your PunkId (between 0 and 9999) in the box below and click "next step".</p>
         <br />
         <input type="number" id="punkIdField" disabled={this.state.stage>2} onChange={this.handlePunkIdChange.bind(this)} />
       </div>}

@@ -6,7 +6,7 @@ const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 class Purchase extends React.Component{
   constructor(props){
   super(props);
-  this.state = {purchaseType:null, shipType:null, stackId:null}
+  this.state = {purchaseType:null, shipType:null, stackId:null, creditSale:false}
   this.handleTypeRadio = this.handleTypeRadio.bind(this);
   this.handleShipRadio = this.handleShipRadio.bind(this);
   this.handleGoBack = this.handleGoBack.bind(this);
@@ -45,32 +45,45 @@ handleStartOver(){
   }
   }
 
-handlePurchase(purchaseType){
-  const { drizzle, drizzleState } = this.props;
-  const contract = drizzle.contracts.PunkPrintRegistry;
-  let purchaseFunc='';
+  handlePurchase(purchaseType){
+    let stackId;
+    const { drizzle, drizzleState } = this.props;
+    const contract1 = drizzle.contracts.PunkPrintRegistry;
+    const contract2 = drizzle.contracts.PunkPrintRegistryMinter;
+    let purchaseFunc='';
 
-  if (purchaseType === 'pricePerPrintInWei' || purchaseType === 'pricePerPrintIntlShipInWei'){
-    purchaseFunc = 'purchasePrint'
-  } else if (purchaseType === 'pricePerNFCInWei' || purchaseType === 'pricePerNFCIntlShipInWei'){
-    purchaseFunc = 'purchaseNFCOnly'
-  } else {
-    purchaseFunc = 'purchaseMisc'
-  }
+    if (purchaseType === 'pricePerPrintInWei' || purchaseType === 'pricePerPrintIntlShipInWei'){
+      purchaseFunc = 'purchasePrint'
+    } else if (purchaseType === 'pricePerNFCInWei' || purchaseType === 'pricePerNFCIntlShipInWei'){
+      purchaseFunc = 'purchaseNFCOnly'
+    } else {
+      purchaseFunc = 'purchaseMisc'
+    }
 
-console.log("type: "+purchaseType + " Func: "+ purchaseFunc);
+  console.log("type: "+purchaseType + " Func: "+ purchaseFunc);
 
-  const determineAmount = drizzleState.contracts.PunkPrintRegistry[purchaseType];
-  const amountToSend = determineAmount['0x0'].value;
-  console.log("sending "+ amountToSend + "contact "+this.props.contactMethod + "Punk " + this.props.punkId+ "using: "+ purchaseFunc);
+    const determineAmount = drizzleState.contracts.PunkPrintRegistry[purchaseType];
+    const amountToSend = determineAmount['0x0'].value;
+    console.log("sending "+ amountToSend + "contact "+this.props.contactMethod + "Punk " + this.props.punkId+ "using: "+ purchaseFunc);
 
-  const stackId = contract.methods[purchaseFunc].cacheSend(this.props.punkId,this.props.contactMethod, {
-    from: drizzleState.accounts[0],
-    value: amountToSend
-  });
-  // save the `stackId` for later reference
-  this.setState({ stackId });
-};
+    const creditPurchaseConcat = purchaseFunc + " | " + this.props.contactMethod;
+    const creditsToUse = this.props.drizzleState.contracts.PunkPrintRegistryMinter.addressToCreditsToSpend[this.props.creditsToUseKey];
+
+    if (creditsToUse && creditsToUse.value>0){
+      this.setState({creditSale:true})
+      stackId = contract2.methods['mint'].cacheSend(this.props.punkId,creditPurchaseConcat, {
+        from: drizzleState.accounts[0],
+        value: 0
+      });
+    } else {
+      stackId = contract1.methods[purchaseFunc].cacheSend(this.props.punkId,this.props.contactMethod, {
+        from: drizzleState.accounts[0],
+        value: amountToSend
+      });
+    }
+    // save the `stackId` for later reference
+    this.setState({ stackId });
+  };
 
 getStatus(){
   const { transactions, transactionStack } = this.props.drizzleState;
@@ -122,10 +135,23 @@ getTokenId(){
     let priceObject = {pricePerPrintInWei: pricePerPrintInWei, pricePerPrintIntlShipInWei:pricePerPrintIntlShipInWei,pricePerNFCInWei:pricePerNFCInWei,pricePerNFCIntlShipInWei:pricePerNFCIntlShipInWei,pricePerMiscInWei:pricePerMiscInWei, pricePerMiscIntlShipInWei:pricePerMiscIntlShipInWei};
     //if (this.findPrice()){ console.log("being bought: "+ this.findPrice());}
     let status = this.getStatus();
-    let tokenId = this.getTokenId();
+    let tokenId;
+    if (this.state.creditSale){
+        tokenId= null;
+    } else {
+      tokenId = this.getTokenId();
+    }
+
     let url = "http://ppr.artblocks.io/details/";
     if (tokenId) {
       url = url+tokenId;
+    }
+
+
+    const creditsToUse = this.props.drizzleState.contracts.PunkPrintRegistryMinter.addressToCreditsToSpend[this.props.creditsToUseKey];
+
+    if(creditsToUse){
+      console.log('ctu: '+creditsToUse.value);
     }
     return (
       <div>
@@ -153,7 +179,7 @@ getTokenId(){
       <div>
       <h4>Shiping Type: {this.state.shipType}</h4>
       <br />
-      <h4>Total: {priceObject[this.findPrice()] && (web3.utils.fromWei(priceObject[this.findPrice()].value.toString(), 'ether'))}Ξ</h4>
+      <h4>Total: {creditsToUse && creditsToUse.value>0 ? 'FRE' : priceObject[this.findPrice()] && (web3.utils.fromWei(priceObject[this.findPrice()].value.toString(), 'ether'))}Ξ</h4>
       <br />
       <br />
       <button className = "bigButton" disabled = {status?true:false} onClick={() => {this.handlePurchase(purchaseType)}}>{status?status:'Purchase'}</button>
@@ -163,8 +189,12 @@ getTokenId(){
     <h4>Your transaction is complete! Please reach out to info@artblocks.io or Snowfro#8886 on Discord using the recorded contact method
     so we can get your package to you ASAP.</h4>
     <br />
+    {tokenId &&
+      <div>
     <h4>Your Print Registry TokenId for this transaction is {tokenId}. You can visit your authentication
     page at <a href={url}>{url}</a>. Note that the NFC UID will be set manually at time of printing.</h4>
+    </div>
+    }
     <p> You will be provided with a tracking number once your package has shipped. Please allow 1-2 weeks for delivery.</p>
 
   </div>
