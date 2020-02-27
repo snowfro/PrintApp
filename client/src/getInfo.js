@@ -41,7 +41,7 @@ class GetInfo extends React.Component {
 render(){
 
   const {drizzleState} = this.props;
-  
+
   console.log(drizzleState);
 
   return (
@@ -70,7 +70,7 @@ render(){
         <br />
         <p>Great! Now we need to choose a punk. Please type in your PunkId (between 0 and 9999) in the box below and click "next step".</p>
         <br />
-        <input type="number" id="punkIdField" disabled={this.state.stage>2} onChange={this.handlePunkIdChange.bind(this)} />
+        <input type="number" id="punkIdField" min="0" max="9999" disabled={this.state.stage>2} onChange={this.handlePunkIdChange.bind(this)} />
       </div>}
 
         {this.state.stage>2 &&

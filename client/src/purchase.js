@@ -85,33 +85,41 @@ handleStartOver(){
     this.setState({ stackId });
   };
 
-getStatus(){
-  const { transactions, transactionStack } = this.props.drizzleState;
-  // get the transaction hash using our saved `stackId`
-  const txHash = transactionStack[this.state.stackId];
-  // if transaction hash does not exist, don't display anything
-  if (!txHash) return null;
 
-  if (transactions[txHash]){
-  console.log(transactions[txHash].status);
-  return transactions[txHash].status;
-}
-}
+  getStatus(){
+    const { transactions, transactionStack } = this.props.drizzleState;
+    // get the transaction hash using our saved `stackId`
+    const txHash = transactionStack[this.state.stackId];
+    // if transaction hash does not exist, don't display anything
+    if (!txHash) return null;
 
-getTokenId(){
-  const {transactions, transactionStack } = this.props.drizzleState;
-  const txHash = transactionStack[this.state.stackId];
-  if (!txHash) return null;
-  if (transactions[txHash]){
-    if (transactions[txHash].status==='success'){
-    const newTokenId = transactions[txHash].receipt.events.Transfer.returnValues[2];
-    return newTokenId;
-  } else {
-    return null;
+    if (transactions[txHash]){
+    console.log(transactions[txHash].status);
+    return transactions[txHash].status;
   }
-}
-}
+  }
 
+  getTokenId(){
+    const {transactions, transactionStack } = this.props.drizzleState;
+    const txHash = transactionStack[this.state.stackId];
+    if (!txHash) return null;
+    if (transactions[txHash]){
+      if (transactions[txHash].status==='success'){
+        if (this.state.creditSale){
+          const newTokenIdHex = transactions[txHash].receipt.events[0].raw.topics[3];
+          const newTokenId = parseInt(newTokenIdHex,16);
+          console.log('newTokenIdMint: ' + newTokenId);
+          return newTokenId;
+        } else {
+      const newTokenId = transactions[txHash].receipt.events.Transfer.returnValues[2];
+      console.log('newTokenIdPurchase: '+newTokenId)
+      return newTokenId;
+    }
+    } else {
+      return null;
+    }
+  }
+  }
 
 
 
@@ -135,13 +143,7 @@ getTokenId(){
     let priceObject = {pricePerPrintInWei: pricePerPrintInWei, pricePerPrintIntlShipInWei:pricePerPrintIntlShipInWei,pricePerNFCInWei:pricePerNFCInWei,pricePerNFCIntlShipInWei:pricePerNFCIntlShipInWei,pricePerMiscInWei:pricePerMiscInWei, pricePerMiscIntlShipInWei:pricePerMiscIntlShipInWei};
     //if (this.findPrice()){ console.log("being bought: "+ this.findPrice());}
     let status = this.getStatus();
-    let tokenId;
-    if (this.state.creditSale){
-        tokenId= null;
-    } else {
-      tokenId = this.getTokenId();
-    }
-
+    let tokenId = this.getTokenId();
     let url = "http://ppr.artblocks.io/details/";
     if (tokenId) {
       url = url+tokenId;
@@ -189,12 +191,8 @@ getTokenId(){
     <h4>Your transaction is complete! Please reach out to info@artblocks.io or Snowfro#8886 on Discord using the recorded contact method
     so we can get your package to you ASAP.</h4>
     <br />
-    {tokenId &&
-      <div>
     <h4>Your Print Registry TokenId for this transaction is {tokenId}. You can visit your authentication
     page at <a href={url}>{url}</a>. Note that the NFC UID will be set manually at time of printing.</h4>
-    </div>
-    }
     <p> You will be provided with a tracking number once your package has shipped. Please allow 1-2 weeks for delivery.</p>
 
   </div>

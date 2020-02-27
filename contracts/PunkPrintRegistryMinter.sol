@@ -260,15 +260,15 @@ library Strings {
 pragma solidity ^0.5.0;
 
 interface PunkPrintRegistryInterface {
-    
-    function mint(uint256 _artId, string calldata _nfc) external returns (uint256 _tokenId); 
+
+    function mint(uint256 _artId, string calldata _nfc) external returns (uint256 _tokenId);
 }
 
 pragma solidity ^0.5.0;
 
 interface PunkInterface {
-    
-    function punkIndexToAddress(uint256 _punkId) external view returns (address); 
+
+    function punkIndexToAddress(uint256 _punkId) external view returns (address);
 }
 
 
@@ -318,13 +318,13 @@ contract PunkPrintRegistryMinter  {
     // Minting Function         //
     //////////////////////////////
 
-    function mint(uint256 _punkId, string memory _contactMethodAndType) public returns (bool) {
+    function mint(uint256 _punkId, string memory _contactMethodAndType) public returns (uint256 _tokenId) {
         uint256 balance = addressToCreditsToSpend[msg.sender];
         require(msg.sender == punkContract.punkIndexToAddress(_punkId), "You must own Punk!");
         require(balance>0, "You must have credits!");
-        pprContract.mint(_punkId, _contactMethodAndType);
+        uint256 mintedToken = pprContract.mint(_punkId, _contactMethodAndType);
         addressToCreditsToSpend[msg.sender] --;
-        return true;
+        return mintedToken;
     }
 
     //////////////////////////////
@@ -355,4 +355,3 @@ contract PunkPrintRegistryMinter  {
     }
 
 }
-
