@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 import WelcomeScreen from "./welcomeScreen";
 import GetInfo from "./getInfo";
@@ -9,7 +8,22 @@ import SetConstants from "./setConstants";
 class App extends Component {
   constructor(props){
   super(props);
-  this.state = { loading: true, drizzleState: null, welcomeState: 0, contactMethod: '', punkId:null, creditsToUseKey:null, creditsToGiveKey:null, creditToAddress:null, owner1Key:null, owner2Key:null, creditManagerCreditsToGive:null, creditManagerAddressToCredit:null};
+  this.state = {
+    loading: true,
+    drizzleState: null,
+    welcomeState: 0,
+    contactMethod: '',
+    punkId:null,
+    address:{firstName:'', lastName:'', address1:'', address2:'', city:'', stateProv:'', zip:'', country:''},
+    creditsToUseKey:null,
+    creditsToGiveKey:null,
+    creditToAddress:null,
+    owner1Key:null,
+    owner2Key:null,
+    creditManagerCreditsToGive:null,
+    creditManagerAddressToCredit:null
+  };
+
   this.handleWelcomeChange = this.handleWelcomeChange.bind(this);
   this.addContactMethod = this.addContactMethod.bind(this);
   this.setPunkId = this.setPunkId.bind(this);
@@ -20,6 +34,8 @@ class App extends Component {
   this.setOwner2Key = this.setOwner2Key.bind(this);
   this.setCreditManagerCreditsToGive = this.setCreditManagerCreditsToGive.bind(this);
   this.setCreditManagerAddressToCredit = this.setCreditManagerAddressToCredit.bind(this);
+  this.handleAddressInput = this.handleAddressInput.bind(this);
+
 }
   componentDidMount() {
 
@@ -70,15 +86,20 @@ class App extends Component {
 
 
 handleWelcomeChange(value){
+  window.scrollTo(0, 0);
   const newWelcomeState = this.state.welcomeState+value;
   this.setState({welcomeState:newWelcomeState});
   if (this.state.welcomeState===2){
-    this.setState({contactMethod: '', punkId: null});
+    this.setState({punkId: null});
   }
 }
 
 addContactMethod(contactMethod){
   this.setState({contactMethod:contactMethod});
+}
+
+handleAddressInput(type, value){
+  this.setState(state => (state.address[type] = value));
 }
 
 setPunkId(punkId){
@@ -138,6 +159,8 @@ render(){
       creditsToGiveKey = {this.state.creditsToGiveKey}
       owner1Key = {this.state.owner1Key}
       owner2Key = {this.state.owner2Key}
+      address = {this.state.address}
+      handleAddressInput = {this.handleAddressInput}
     />
 
   </div>
@@ -155,6 +178,7 @@ render(){
     creditsToGiveKey = {this.state.creditsToGiveKey}
     owner1Key = {this.state.owner1Key}
     owner2Key = {this.state.owner2Key}
+    address = {this.state.address}
     />
     </div>
   )

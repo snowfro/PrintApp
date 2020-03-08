@@ -36,7 +36,7 @@ render() {
     return(
       <div>
         <canvas ref="canvas" width={300} height={300} />
-        <img ref="image" className="hidden" src={require('./punks.png')} alt="10,000 CryptoPunks"/>
+        <img ref="image" className="d-none" src={require('./punks.png')} alt="10,000 CryptoPunks"/>
       </div>
     )
   }
