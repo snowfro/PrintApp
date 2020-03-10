@@ -16,8 +16,10 @@ class App extends Component {
     punkId:null,
     address:{firstName:'', lastName:'', address1:'', address2:'', city:'', stateProv:'', zip:'', country:''},
     creditsToUseKey:null,
+    artCreditsToUse:null,
     creditsToGiveKey:null,
     creditToAddress:null,
+    creditToArt:null,
     owner1Key:null,
     owner2Key:null,
     creditManagerCreditsToGive:null,
@@ -28,8 +30,10 @@ class App extends Component {
   this.addContactMethod = this.addContactMethod.bind(this);
   this.setPunkId = this.setPunkId.bind(this);
   this.setCreditsToUseKey = this.setCreditsToUseKey.bind(this);
+  this.setArtCreditsToUse = this.setArtCreditsToUse.bind(this);
   this.setCreditsToGiveKey = this.setCreditsToGiveKey.bind(this);
   this.setCreditToAddress = this.setCreditToAddress.bind(this);
+  this.setCreditToArt = this.setCreditToArt.bind(this);
   this.setOwner1Key = this.setOwner1Key.bind(this);
   this.setOwner2Key = this.setOwner2Key.bind(this);
   this.setCreditManagerCreditsToGive = this.setCreditManagerCreditsToGive.bind(this);
@@ -68,9 +72,18 @@ class App extends Component {
     this.setState({creditToAddress:value});
   }
 
+  setCreditToArt(value){
+  this.setState({creditToArt:value});
+  }
+
   setCreditsToUseKey(value){
     this.setState({creditsToUseKey:value});
   }
+
+  setArtCreditsToUse(value){
+  this.setState({artCreditsToUse:value});
+  }
+
   setOwner1Key(value){
     this.setState({owner1Key:value});
   }
@@ -123,7 +136,9 @@ render(){
       creditsToUseKey = {this.state.creditsToUseKey}
       creditsToGiveKey = {this.state.creditsToGiveKey}
       setCreditToAddress = {this.setCreditToAddress}
+      setCreditToArt = {this.setCreditToArt}
       creditToAddress = {this.state.creditToAddress}
+      creditToArt = {this.state.creditToArt}
       setOwner1Key = {this.setOwner1Key}
       setOwner2Key = {this.setOwner2Key}
       owner1Key = {this.state.owner1Key}
@@ -155,6 +170,8 @@ render(){
       contactMethod = {this.state.contactMethod}
       setPunkId={this.setPunkId}
       punkId = {this.state.punkId}
+      setArtCreditsToUse = {this.setArtCreditsToUse}
+      artCreditsToUse = {this.state.artCreditsToUse}
       creditsToUseKey = {this.state.creditsToUseKey}
       creditsToGiveKey = {this.state.creditsToGiveKey}
       owner1Key = {this.state.owner1Key}
@@ -179,6 +196,7 @@ render(){
     owner1Key = {this.state.owner1Key}
     owner2Key = {this.state.owner2Key}
     address = {this.state.address}
+    artCreditsToUse = {this.state.artCreditsToUse}
     />
     </div>
   )

@@ -14,6 +14,13 @@ class GetInfo extends React.Component {
       this.props.setPunkId(event.target.value);
   }
 
+  getArtCreditsToUse(){
+    const {drizzle} = this.props;
+    const contract = drizzle.contracts.PunkPrintRegistryMinter;
+    let artCreditsToUseDataKey = contract.methods['artIdToCreditsToSpend'].cacheCall(this.props.punkId);
+    this.props.setArtCreditsToUse(artCreditsToUseDataKey);
+  }
+
   handleClick(){
   this.props.handleWelcomeChange(-1);
   }
@@ -28,6 +35,12 @@ class GetInfo extends React.Component {
   handleNextClick(){
 
     this.setState({stage: this.state.stage+1});
+    if (this.state.stage===2){
+      console.log('tag');
+      this.getArtCreditsToUse();
+    }
+
+
     if (this.state.stage>2){
       this.props.handleWelcomeChange(1);
     }
@@ -73,8 +86,14 @@ class GetInfo extends React.Component {
 render(){
 
   const {drizzleState} = this.props;
+  const minter = drizzleState.contracts.PunkPrintRegistryMinter;
 
   console.log(drizzleState);
+  console.log('art credits to use key: '+ this.props.artCreditsToUse);
+
+  if (minter.artIdToCreditsToSpend[this.props.artCreditsToUse]){
+    console.log('art credits: '+ minter.artIdToCreditsToSpend[this.props.artCreditsToUse].value);
+  }
 
   return (
     <div className="container mt-5">
@@ -86,7 +105,7 @@ render(){
     <br />
     <p>Please fill out your contact details below. Note that the <b><i>contact method</i></b> you provide will be included in your purchase transaction and recorded on the blockchain.
     This is our only guaranteed method to contact you in case we need clarification about your order.</p>
-    <small id="contactMethodHelp" class="form-text text-muted">Possible contact methods include e-mail address, twitter handle, or <b>full</b> Discord handle (including numerical ID).</small>
+    <small id="contactMethodHelp" className="form-text text-muted">Possible contact methods include e-mail address, twitter handle, or <b>full</b> Discord handle (including numerical ID).</small>
 
     <div className="input-group mb-3">
       <div className="input-group-prepend">
@@ -156,7 +175,7 @@ render(){
     </div>
 
     <br />
-    <div className="alert alert-warning">
+    <div className="alert alert-info">
     <p>Please take an extra moment to verify your address and contact method before proceeding. </p>
     </div>
     <div className="alert alert-danger">
@@ -184,7 +203,14 @@ render(){
         </div>
       }
 
-    <br />
+      {minter.artIdToCreditsToSpend[this.props.artCreditsToUse] && minter.artIdToCreditsToSpend[this.props.artCreditsToUse].value>0 &&
+          <div className='alert alert-success'>
+            <h4>This Punk has a free print credit!</h4>
+          </div>
+
+            }
+
+
     <button onClick = {this.handleBackClick} disabled={this.state.stage>1?false:true} className={this.state.stage>1?null:"hidden"}>Previous Step</button><button onClick = {this.handleNextClick} disabled={!this.props.punkId&&this.state.stage>1?true:false} >{this.state.stage>2?"CONFIRM":"Next Step"}</button>
     <br />
     <br />

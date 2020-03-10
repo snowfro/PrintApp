@@ -18,8 +18,8 @@ class SetConstants extends React.Component {
     const creditsToGiveKey = contract2.methods['managerAddressToCreditsToGive'].cacheCall(drizzleState.accounts[0]);
 
     const owner1Key = contract2.methods['owner1'].cacheCall();
-    const owner2Key = contract2.methods['owner2'].cacheCall();
-    //console.log(this.creditsToUseKey, this.creditsToGiveKey);
+    const owner2Key = contract2.methods['printerAddress'].cacheCall();
+
 
 
     Promise.all([ pricePerPrintInWei, pricePerPrintIntlShipInWei, pricePerNFCInWei, pricePerNFCIntlShipInWei, pricePerMiscInWei, pricePerMiscIntlShipInWei,creditsToUseKey, creditsToGiveKey, owner1Key, owner2Key ]).then(() => {
@@ -39,7 +39,7 @@ class SetConstants extends React.Component {
 
     const {drizzleState} = this.props;
     console.log(drizzleState.accounts[0]);
-    
+
 return null;
 
 }
